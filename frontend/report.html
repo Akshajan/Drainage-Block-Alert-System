@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drainage Block Reporting Form</title>
+    <link rel="stylesheet" href="css/report.css">
+</head>
+<body>
+    <div class="back">
+        <a href="index.html">< Back</a>
+      </div>
+      
+    <div class="form-container">
+        <h2>Drainage Block Reporting Form</h2>
+        <form id="report-form" action="http://localhost:3000/report" method="post" enctype="multipart/form-data">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="mobile">Mobile Number</label>
+            <input type="text" id="mobile" name="mobile" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+
+            <label for="block-details">Block Details</label>
+            <textarea id="block-details" name="block-details" rows="3" required></textarea>
+
+            <label for="photo">Photo (optional)</label>
+            <input type="file" id="photo" name="photo" accept="image/*">
+
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+
+    <script src="js/report.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>
