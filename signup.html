@@ -11,7 +11,7 @@
             <h1>Sign Up</h1>
         </div>
         <div class="form-container">
-            <form id="signupForm" action="#" method="post">
+            <form id="signupForm" action="http://localhost:3000/signup" method="post">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" placeholder="Enter your full name" required>
@@ -52,9 +52,17 @@
                     <label for="email">Email ID:</label>
                     <input type="email" id="email" name="email" required>
                   </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="pass" name="pass" required>
+                  </div>
                   <button type="submit">Submit</button>
             </form>
         </div>
     </div>
+
+    <script src="js/signup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
 </body>
 </html>

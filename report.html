@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drainage Block Reporting Form</title>
-    <link rel="stylesheet" href="report.css">
+    <link rel="stylesheet" href="css/report.css">
 </head>
 <body>
     <div class="back">
@@ -13,7 +13,7 @@
       
     <div class="form-container">
         <h2>Drainage Block Reporting Form</h2>
-        <form id="report-form">
+        <form id="report-form" action="http://localhost:3000/report" method="post" enctype="multipart/form-data">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
 
@@ -36,6 +36,7 @@
         </form>
     </div>
 
-    <script src="report.js"></script>
+    <script src="js/report.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>
