@@ -13,6 +13,9 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -29,8 +32,54 @@ db.connect((err) => {
     console.log('MySQL Connected...');
 });
 
+
+// index
+app.get('/index', (req, res) => {
+    res.render("index");
+});
+
+app.get('/login', (req, res) => {
+    res.render("login");
+});
+
+app.get('/report', (req, res) => {
+    res.render("report");
+});
+
+app.get('/signup', (req, res) => {
+    res.render("signup");
+});
+
+app.get('/contact', (req, res) => {
+    res.render("contact");
+});
+
+app.get('/administrator', (req, res) => {
+    res.render("administrator");
+});
+
+app.get('/about', (req, res) => {
+    res.render("about");
+});
+
+
+app.get('/profile', (req, res) => {
+    // Create a dummy user object since there's no login yet
+    const user = {
+        name: "Demo User",
+        email: "demo@example.com",
+        phone: "1234567890"
+    };
+    // Render profile with dummy user data
+    res.render("profile", { user: user, reports: [] });
+});
+
+
+
 // Signup route
 app.post('/signup', (req, res) => {
+    6
+    
     const { name, address, state, pincode, phone, email, pass } = req.body;
     const hashedPassword = bcrypt.hashSync(pass, 8);
     const sql = 'INSERT INTO users (name, address, state, pincode, phone, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -64,7 +113,31 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Admin Sign-In Route
+app.post('/administrator', (req, res) => {
+    const { email, password } = req.body;
 
+    // Fetch admin details
+    const sql = 'SELECT * FROM admins WHERE email = ?';
+    db.query(sql, [email], (err, result) => {
+        if (err) {
+            return res.status(500).send({ message: 'Error in signing in', error: err });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).send({ message: 'Admin not found' });
+        }
+
+        const admin = result[0];
+
+        // Compare passwords (plain text)
+        if (password === admin.password) {
+            res.status(200).send({ message: 'Admin sign-in successful' });
+        } else {
+            res.status(401).send({ message: 'Invalid password' });
+        }
+    });
+});
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -99,10 +172,6 @@ app.post('/report', upload.single('photo'), (req, res) => {
     });
 });
 
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'frontend/views')); // Path to your EJS files
-
 // Profile route
 app.get('/profile/:userId', (req, res) => {
     const userId = req.params.userId;
@@ -132,7 +201,6 @@ app.get('/profile/:userId', (req, res) => {
     });
 });
 
-app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use(cors({
     origin: 'http://localhost:5500', // Replace with your frontend URL
