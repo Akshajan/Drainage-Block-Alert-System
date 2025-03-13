@@ -6,7 +6,7 @@
   <title>Profile - Drainage Block Alert</title>
   <link rel="stylesheet" href="public/profile.css">
 </head>
-<body>
+<body>s
   <header>
     <h1>Drainage Block Alert</h1>
     <nav>
@@ -28,13 +28,13 @@
       </div>
 
       <h3>Reported Drainage Blocks</h3>
-      <div class="drainage-blocks">
-        <% if (drainageBlocks.length > 0) { %>
-          <% drainageBlocks.forEach(block => { %>
-            <div class="block-item">
-              <p><strong>Location:</strong> <%= block.location %></p>
-              <p><strong>Description:</strong> <%= block.description %></p>
-              <p><strong>Reported At:</strong> <%= block.reportedAt.toLocaleString() %></p>
+      <div class="reports-list">
+        <% if (reports.length > 0) { %>
+          <% reports.forEach(report => { %>
+            <div class="report-item">
+              <p><strong>Location:</strong> <%= report.address %></p>
+              <p><strong>Details:</strong> <%= report.block_details %></p>
+              <p><strong>Reported At:</strong> <%= report.reported_at.toLocaleString() %></p>
             </div>
           <% }) %>
         <% } else { %>
@@ -48,6 +48,6 @@
     <p>&copy; 2023 Drainage Block Alert. Developed by IT Students, Barton Hill Engineering College.</p>
   </footer>
 
-  <script src="public/profile.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>

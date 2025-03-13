@@ -10,7 +10,7 @@ document.getElementById('signin-form').addEventListener('submit', function (e) {
     axios.post('http://localhost:3000/login', formData)
         .then(response => {
             alert(response.data.message); // Show success message
-            window.location.href = 'dashboard.html'; // Redirect to dashboard
+            window.location.href = 'index.html'; // Redirect to dashboard
         })
         .catch(error => {
             console.error('Error during login:', error);

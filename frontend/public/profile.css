@@ -1,106 +1,106 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    color: #000000;
-    line-height: 1.6;
-  }
-  
-  header {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    font-weight: bold;
-  }
-  
-  nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0 0;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin: 0 15px;
-  }
-  
-  nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-  }
-  
-  nav ul li a:hover {
-    color: #cccccc;
-  }
-  
-  main {
-    padding: 40px 20px;
-  }
-  
-  /* Profile Section */
-  .profile-section {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #f9f9f9;
-    border: 1px solid #000000;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profile-section h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2rem;
-    color: #000000;
-    border-bottom: 2px solid #000000;
-    display: inline-block;
-    padding-bottom: 5px;
-  }
-  
-  .user-info {
-    margin-bottom: 30px;
-  }
-  
-  .user-info p {
-    font-size: 1.1rem;
-    margin: 10px 0;
-  }
-  
-  .drainage-blocks {
-    margin-top: 20px;
-  }
-  
-  .block-item {
-    padding: 15px;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    background-color: #ffffff;
-  }
-  
-  .block-item p {
-    margin: 5px 0;
-  }
-  
-  footer {
-    background-color: #000000;
-    color: #ffffff;
-    text-align: center;
-    padding: 15px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 0.9rem;
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #000000;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #cccccc;
+}
+
+main {
+  padding: 40px 20px;
+}
+
+/* Profile Section */
+.profile-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #000000;
+  border-bottom: 2px solid #000000;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.user-info {
+  margin-bottom: 30px;
+}
+
+.user-info p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+.reports-list {
+  margin-top: 20px;
+}
+
+.report-item {
+  padding: 15px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+}
+
+.report-item p {
+  margin: 5px 0;
+}
+
+footer {
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.9rem;
+}

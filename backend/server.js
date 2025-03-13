@@ -80,8 +80,7 @@ const upload = multer({ storage: storage });
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Route to handle form submission
-
+// Report route
 app.post('/report', upload.single('photo'), (req, res) => {
     console.log('Request Body:', req.body); // Log the request body
     console.log('Uploaded File:', req.file); // Log the uploaded file
@@ -100,6 +99,40 @@ app.post('/report', upload.single('photo'), (req, res) => {
     });
 });
 
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'frontend/views')); // Path to your EJS files
+
+// Profile route
+app.get('/profile/:userId', (req, res) => {
+    const userId = req.params.userId;
+
+    // Fetch user details
+    const userSql = 'SELECT name, email, phone FROM users WHERE id = ?';
+    db.query(userSql, [userId], (err, userResult) => {
+        if (err) {
+            return res.status(500).send({ message: 'Error fetching user details', error: err });
+        }
+
+        if (userResult.length === 0) {
+            return res.status(404).send({ message: 'User not found' });
+        }
+
+        const user = userResult[0];
+
+        // Fetch reported drainage blocks
+        const reportsSql = 'SELECT * FROM reports WHERE email = ? ORDER BY reported_at DESC';
+        db.query(reportsSql, [user.email], (err, reportsResult) => {
+            if (err) {
+                return res.status(500).send({ message: 'Error fetching reports', error: err });
+            }
+
+            res.render('profile', { user, reports: reportsResult });
+        });
+    });
+});
+
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use(cors({
     origin: 'http://localhost:5500', // Replace with your frontend URL
