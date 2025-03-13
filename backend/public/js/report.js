@@ -63,7 +63,7 @@
 //     })
 //     .then(response => {
 //         alert(response.data.message); // Show success message
-//         window.location.href = 'index.html'; // Redirect to home page
+//         window.location.href = 'index'; // Redirect to home page
 //     })
 //     .catch(error => {
 //         console.error('Error submitting report:', error);
@@ -111,7 +111,7 @@ document.getElementById('report-form').addEventListener('submit', function (e) {
     .then(response => {
         alert(response.data.message); // Show success message
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'index';
         }, 2000); // Redirect to home page
     })
     .catch(error => {

@@ -33,12 +33,35 @@ db.connect((err) => {
 });
 
 
-
-
 // index
-app.get('/', (req, res) => {
+app.get('/index', (req, res) => {
     res.render("index");
 });
+
+app.get('/login', (req, res) => {
+    res.render("login");
+});
+
+app.get('/report', (req, res) => {
+    res.render("report");
+});
+
+app.get('/signup', (req, res) => {
+    res.render("signup");
+});
+
+app.get('/contact', (req, res) => {
+    res.render("contact");
+});
+
+app.get('/administrator', (req, res) => {
+    res.render("administrator");
+});
+
+app.get('/about', (req, res) => {
+    res.render("about");
+});
+
 
 app.get('/profile', (req, res) => {
     // Create a dummy user object since there's no login yet
@@ -50,8 +73,6 @@ app.get('/profile', (req, res) => {
     // Render profile with dummy user data
     res.render("profile", { user: user, reports: [] });
 });
-
-
 
 
 
@@ -92,7 +113,31 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Admin Sign-In Route
+app.post('/administrator', (req, res) => {
+    const { email, password } = req.body;
 
+    // Fetch admin details
+    const sql = 'SELECT * FROM admins WHERE email = ?';
+    db.query(sql, [email], (err, result) => {
+        if (err) {
+            return res.status(500).send({ message: 'Error in signing in', error: err });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).send({ message: 'Admin not found' });
+        }
+
+        const admin = result[0];
+
+        // Compare passwords (plain text)
+        if (password === admin.password) {
+            res.status(200).send({ message: 'Admin sign-in successful' });
+        } else {
+            res.status(401).send({ message: 'Invalid password' });
+        }
+    });
+});
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

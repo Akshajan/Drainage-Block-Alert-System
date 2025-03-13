@@ -14,7 +14,7 @@ document.getElementById('signupForm').addEventListener('submit', function (e) {
     axios.post('http://localhost:3000/signup', formData)
         .then(response => {
             alert(response.data.message); // Show success message
-            window.location.href = 'login.html'; // Redirect to login page
+            window.location.href = 'login'; // Redirect to login page
         })
         .catch(error => {
             console.error('Error during signup:', error);
