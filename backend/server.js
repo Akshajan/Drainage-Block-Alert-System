@@ -13,6 +13,9 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -29,8 +32,33 @@ db.connect((err) => {
     console.log('MySQL Connected...');
 });
 
+
+
+
+// index
+app.get('/', (req, res) => {
+    res.render("index");
+});
+
+app.get('/profile', (req, res) => {
+    // Create a dummy user object since there's no login yet
+    const user = {
+        name: "Demo User",
+        email: "demo@example.com",
+        phone: "1234567890"
+    };
+    // Render profile with dummy user data
+    res.render("profile", { user: user, reports: [] });
+});
+
+
+
+
+
 // Signup route
 app.post('/signup', (req, res) => {
+    6
+    
     const { name, address, state, pincode, phone, email, pass } = req.body;
     const hashedPassword = bcrypt.hashSync(pass, 8);
     const sql = 'INSERT INTO users (name, address, state, pincode, phone, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -99,10 +127,6 @@ app.post('/report', upload.single('photo'), (req, res) => {
     });
 });
 
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'frontend/views')); // Path to your EJS files
-
 // Profile route
 app.get('/profile/:userId', (req, res) => {
     const userId = req.params.userId;
@@ -132,7 +156,6 @@ app.get('/profile/:userId', (req, res) => {
     });
 });
 
-app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use(cors({
     origin: 'http://localhost:5500', // Replace with your frontend URL
