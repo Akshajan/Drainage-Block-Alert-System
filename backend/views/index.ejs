@@ -70,67 +70,42 @@
    </div>
    <br>
 
-    <main>
-      
-    <h2 id="t5">List of Blocks Detected by the sensors and Reported by th Users</h2>
+   <main>      
+    <h2 id="t5">List of Blocks Detected by the sensors and Reported by the Users</h2>
 
-      <article class="news-item">
-          <div class="p1">
-            <a href="https://maps.app.goo.gl/osbe5iMs3mcsgbMe9"><p style="color: #000000;"><img src="images/profilelogo.png" alt="no image"  width="30px" > <i>Manu Thomas</i> </p></a>
-          <br>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit, consequatur? Nemo nisi nostrum sapiente porro dolores error qui pariatur modi facere quia est debitis labore, minus laudantium aliquid quis sunt!</p>
-          <br>
-          <p class="date">October 14, 2024</p>
-      </div>
-      
-      <div class="p2">
-          <a href="images"><img  src="images/blocked-drainage-system-kampala1.jpg" alt="no image found" width="230" height="144"></a>
-      </div>
-      </article>
-
-      <article class="news-item">
-        <div class="p1">
-            <a href="https://maps.app.goo.gl/osbe5iMs3mcsgbMe9"><p style="color: #000000;"><img src="images/profilelogo.png" alt="no image"  width="30px" > <i>Martin Benny</i> </p></a>
-         <br>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit, consequatur? Nemo nisi nostrum sapiente porro dolores error qui pariatur modi facere quia est debitis labore, minus laudantium aliquid quis sunt!</p>
-        <br>
-        <p class="date">October 14, 2024</p>
-    </div>
-    
-    <div class="p2">
-        <a href="images"><img  src="images/TY13_WASTE_.jpg" alt="no image found" width="230" height="144"></a>
-    </div>
-    </article>
-
-    <article class="news-item">
-      <div class="p1">
-          <a href="https://maps.app.goo.gl/osbe5iMs3mcsgbMe9"><p style="color: #000000;"><img src="images/profilelogo.png" alt="no image"  width="30px" > <i>Abu Salim</i> </p></a>
-     <br>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit, consequatur? Nemo nisi nostrum sapiente porro dolores error qui pariatur modi facere quia est debitis labore, minus laudantium aliquid quis sunt!</p>
-      <br>
-      <p class="date">October 14, 2024</p>
-  </div>
-  
-  <div class="p2">
-      <a href="images"><img  src="images/image-4586101_4587493_20241001074633.jpg" alt="no image found" width="230" height="144"></a>
-  </div>
-  </article>
-
-  <article class="news-item">
-    <div class="p1">
-        <a href="https://maps.app.goo.gl/osbe5iMs3mcsgbMe9"><p style="color: #000000;"><img src="images/profilelogo.png" alt="no image"  width="30px" > <i>Melvin Jackson</i> </p></a>
-    <br>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit, consequatur? Nemo nisi nostrum sapiente porro dolores error qui pariatur modi facere quia est debitis labore, minus laudantium aliquid quis sunt!</p>
-    <br>
-    <p class="date">October 14, 2024</p>
-</div>
-
-<div class="p2">
-    <a href="images"><img  src="images/images.jpg" alt="no image found" width="230" height="144"></a>
-</div>
-</article>
-
-
+      <% if (reports.length > 0) { %>
+        <% reports.forEach(report => { %>
+          <article class="news-item">
+              <div class="p1">
+                <a href="https://maps.app.goo.gl/osbe5iMs3mcsgbMe9">
+                  <p style="color: #000000;">
+                    <img src="/images/profilelogo.png" alt="no image" width="30px">
+                    <i><%= report.name %></i>
+                  </p>
+                </a>
+                <br>
+                <p><%= report.block_details %></p>
+                <br>
+                <p class="date"><%= new Date(report.reported_at).toLocaleString() %></p>
+              </div>
+              
+              <div class="p2">
+                <% if (report.photo_path) { %>
+                  <a href="/uploads/<%= report.photo_path.split('/').pop() %>">
+                    <img src="<%= report.photo_path.split('/').pop() %>" 
+                         alt="Report photo" width="230" height="144">
+                  </a>
+                <% } else { %>
+                  <img src="/images/default-drainage.jpg" alt="Default image" width="230" height="144">
+                <% } %>
+              </div>
+          </article>
+        <% }) %>
+      <% } else { %>
+        <div class="no-reports">
+          <p>No drainage blocks reported yet. Be the first to report!</p>
+        </div>
+      <% } %>
   </main>
 
 <article class="report-box">
