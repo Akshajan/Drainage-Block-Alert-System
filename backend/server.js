@@ -5,8 +5,7 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
-var morgan = require('morgan')
-
+var morgan = require('morgan');
 
 const app = express();
 const port = 3000;
@@ -17,6 +16,31 @@ app.use(cors());
 app.use(morgan("tiny"))
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+
+const session = require('express-session');
+
+
+// Add after other middleware declarations
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
+
+// Admin authentication middleware
+const adminAuth = (req, res, next) => {
+    if (req.session.admin && req.session.admin.authenticated) {
+        next();
+    } else {
+        res.redirect('/administrator');
+    }
+};
+
+// Protect admin route
+app.get('/admin', adminAuth, (req, res) => {
+    // ... existing admin route code ...
+});
 
 
 // MySQL connection
@@ -34,19 +58,6 @@ db.connect((err) => {
     console.log('MySQL Connected...');
 });
 
-
-// // Add this route in your server.js
-// app.get('/reports', (req, res) => {
-//     const sql = 'SELECT * FROM reports ORDER BY reported_at DESC';
-//     db.query(sql, (err, result) => {
-//         if (err) {
-//             console.error('Database error:', err);
-//             res.status(500).send({ message: 'Error fetching reports' });
-//         } else {
-//             res.status(200).json(result);
-//         }
-//     });
-// });
 
 // Update your index route to render EJS
 app.get('/',(req,res)=> {
@@ -70,8 +81,17 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/report', (req, res) => {
-    res.render("report");
-});
+    // Query all reports, ordering by report time (most recent first)
+    const sql = 'SELECT * FROM reports ';
+    db.query(sql, (err, results) => {
+      if (err) {
+        console.error('Error fetching reports:', err);
+        return res.status(500).send('Internal Server Error');
+      }
+      // Pass the reports data to the EJS template
+      res.render('report', { reports: results });
+    });
+  })
 
 app.get('/signup', (req, res) => {
     res.render("signup");
@@ -105,7 +125,6 @@ app.get('/profile', (req, res) => {
 
 // Signup route
 app.post('/signup', (req, res) => {
-    6
     
     const { name, address, state, pincode, phone, email, pass } = req.body;
     const hashedPassword = bcrypt.hashSync(pass, 8);
@@ -157,14 +176,23 @@ app.post('/administrator', (req, res) => {
 
         const admin = result[0];
 
-        // Compare passwords (plain text)
+        // Compare passwords (should be hashed in production)
         if (password === admin.password) {
-            res.status(200).send({ message: 'Admin sign-in successful' });
+            req.session.admin = {  // Store admin in session
+                id: admin.id,
+                email: admin.email,
+                authenticated: true
+            };
+            res.status(200).send({ 
+                message: 'Admin sign-in successful',
+                redirect: '/admin'  // Explicit redirect path
+            });
         } else {
             res.status(401).send({ message: 'Invalid password' });
         }
     });
 });
+
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -228,8 +256,24 @@ app.get('/profile/:userId', (req, res) => {
     });
 });
 
+// Admin Dashboard Route
+app.get('/admin', (req, res) => {
+    // Fetch reports from database
+    const sql = 'SELECT * FROM reports ORDER BY reported_at DESC';
+    db.query(sql, (err, reports) => {
+        if (err) {
+            console.error('Database error:', err);
+            res.render('admin', { reports: [] });
+        } else {
+            res.render('admin', { reports });
+        }
+    });
+});
 
-
+app.get('/admin/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/administrator');
+});
 
 
 app.use(cors({
@@ -242,3 +286,8 @@ app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});

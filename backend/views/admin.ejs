@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Drainage Monitoring</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #333;
+            background-color: #111;
+        }
+        
+        h1, h2 {
+            color: #fff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .dashboard-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #333;
+            background-color: #222;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        
+        tr:hover {
+            background-color: #333;
+        }
+        
+        .sensor-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .sensor-box {
+            width: 48%;
+            padding: 15px;
+            border: 1px solid #333;
+            background-color: #222;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            background-color: #fff;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-normal {
+            background-color: #ccc;
+        }
+        
+        .status-blocked {
+            background-color: #fff;
+        }
+        
+        .last-updated {
+            color: #999;
+            font-size: 0.9em;
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Drainage Monitoring Admin Dashboard</h1>
+        <p>Last updated: <span id="update-time"><%= new Date().toLocaleString() %></span></p>
+        
+        <div class="dashboard-section">
+            <h2>Real-Time Sensor Data</h2>
+            <div class="sensor-container">
+                <div class="sensor-box">
+                    <h3>Sensor 1 (Upstream)</h3>
+                    <!-- Replace with your ThingSpeak channel ID and field number -->
+                    <iframe src="https://thingspeak.com/channels/2902727/charts/1?bgcolor=%23ffffff&color=%23000000&dynamic=true&results=60&type=line&update=15"></iframe>
+                </div>
+                <div class="sensor-box">
+                    <h3>Sensor 2 (Downstream)</h3>
+                    <!-- Replace with your ThingSpeak channel ID and field number -->
+                    <iframe src="https://thingspeak.com/channels/2902727/charts/2?bgcolor=%23ffffff&color=%23000000&dynamic=true&results=60&type=line&update=15"></iframe>
+                </div>
+            </div>
+            <div class="last-updated">Data updates every 15 seconds</div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h2>Reported Drainage Blocks</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Report ID</th>
+                        <th>Reporter</th>
+                        <th>Contact</th>
+                        <th>Location</th>
+                        <th>Block Details</th>
+                        <th>Status</th>
+                        <th>Reported At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% reports.forEach(report => { %>
+                    <tr>
+                        <td><%= report.id %></td>
+                        <td><%= report.name %></td>
+                        <td><%= report.mobile %><br><%= report.email %></td>
+                        <td><%= report.address %></td>
+                        <td><%= report.block_details %></td>
+                        <td>
+                            <span class="status-indicator <%= report.status === 'resolved' ? 'status-normal' : 'status-blocked' %>"></span>
+                            <%= report.status === 'resolved' ? 'Resolved' : 'Pending' %>
+                        </td>
+                        <td><%= new Date(report.reported_at).toLocaleString() %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh the page every 60 seconds
+        setTimeout(() => {
+            location.reload();
+        }, 60000);
+        
+        // Update the timestamp every minute
+        setInterval(() => {
+            document.getElementById('update-time').textContent = new Date().toLocaleString();
+        }, 60000);
+    </script>
+</body>
+</html>
