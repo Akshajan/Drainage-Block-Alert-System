@@ -15,7 +15,6 @@ document.getElementById('signin-form').addEventListener('submit', function (even
         .then((data) => {
             if (data.message === 'Admin sign-in successful') {
                 alert('Admin sign-in successful');
-                window.location.href = '/index'; // Redirect to admin dashboard
             } else {
                 alert(data.message); // Show error message
             }

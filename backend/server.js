@@ -39,7 +39,17 @@ const adminAuth = (req, res, next) => {
 
 // Protect admin route
 app.get('/admin', adminAuth, (req, res) => {
-    // ... existing admin route code ...
+    // Fetch reports from database
+    const sql = 'SELECT * FROM reports ORDER BY reported_at DESC';
+    db.query(sql, (err, reports) => {
+        if (err) {
+            console.error('Database error:', err);
+            res.render('admin', { reports: [] });
+        } else {
+            res.render('admin', { reports });
+        }
+    });
+
 });
 
 
@@ -47,7 +57,7 @@ app.get('/admin', adminAuth, (req, res) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root', // replace with your MySQL username
-    password: 'Akshajan.K', // replace with your MySQL password
+    password: 'root', // replace with your MySQL password
     database: 'userdb'
 });
 
@@ -256,19 +266,6 @@ app.get('/profile/:userId', (req, res) => {
     });
 });
 
-// Admin Dashboard Route
-app.get('/admin', (req, res) => {
-    // Fetch reports from database
-    const sql = 'SELECT * FROM reports ORDER BY reported_at DESC';
-    db.query(sql, (err, reports) => {
-        if (err) {
-            console.error('Database error:', err);
-            res.render('admin', { reports: [] });
-        } else {
-            res.render('admin', { reports });
-        }
-    });
-});
 
 app.get('/admin/logout', (req, res) => {
     req.session.destroy();

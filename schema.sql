@@ -38,6 +38,7 @@ CREATE TABLE admins (
 );
 
 
-
+INSERT INTO admins (name, address, state, pincode, phone, email, password) 
+VALUES ('root', 'admin', 'TN', '600001', '1234567890', 'root@admin.com', 'root');
 
 
