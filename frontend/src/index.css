@@ -1,0 +1,144 @@
+:root {
+  --bg0: #f9fafb;
+  --bg1: #f3f4f6;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --line: rgba(0,0,0,0.10);
+  --line2: rgba(0,0,0,0.05);
+  --accent: #3b82f6;
+  --good: #10b981;
+  --bad: #ef4444;
+  --warn: #f59e0b;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg0);
+  color: var(--text);
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  margin-bottom: 20px;
+}
+
+.header {
+  width: 100%;
+  margin: 0;
+  padding: 18px 24px;
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1005;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--text);
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Forms */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--text);
+}
+.form-group input, .form-group select {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn:hover {
+  background: #2563eb;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--line2);
+}
+
+th {
+  font-weight: 700;
+  background: var(--bg1);
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+}
+.badge.green { background: var(--good); }
+.badge.red { background: var(--bad); }
